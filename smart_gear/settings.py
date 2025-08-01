@@ -13,6 +13,7 @@ https://docs.djangoproject.com/en/5.2/ref/settings/
 import os
 from pathlib import Path
 from datetime import timedelta
+from decouple import config, Csv
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -40,31 +41,27 @@ DJANGO_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django.contrib.humanize', 
-    'rest_framework',
-    'rest_framework_simplejwt',
-    'rest_framework_simplejwt.token_blacklist',
-    'drf_yasg',  # ← Add this
-    'corsheaders',
-    'django_filters', # For number formatting
+    
+   
 ]
 
 THIRD_PARTY_APPS = [
-    # Django REST Framework (install later)
-    # 'rest_framework',
-    # 'rest_framework_simplejwt',
-    # 'rest_framework_simplejwt.token_blacklist',
     
-    # API Documentation (install later)
-    # 'drf_yasg',
+    #Django REST Framework (install later)
+    'rest_framework',
+    'rest_framework_simplejwt',
+    'rest_framework_simplejwt.token_blacklist',
     
-    # CORS handling (install later)
-    # 'corsheaders',
+    #API Documentation (install later)
+    'drf_yasg',
     
-    # Filtering and searching (install later)
-    # 'django_filters',
+    #CORS handling (install later)
+    'corsheaders',
     
-    # Admin enhancements (install later)
-    # 'import_export',
+    #Filtering and searching (install later)
+    'django_filters',
+    
+   
 ]
 
 LOCAL_APPS = [
@@ -253,10 +250,10 @@ os.makedirs(BASE_DIR / 'templates', exist_ok=True)
 # PAYSTACK CONFIGURATION (GHANA)
 # ==============================================================================
 
-PAYSTACK_SECRET_KEY = 'sk_test_your_paystack_secret_key_here'
-PAYSTACK_PUBLIC_KEY = 'pk_test_your_paystack_public_key_here'
+PAYSTACK_SECRET_KEY = config('PAYSTACK_SECRET_KEY')
+PAYSTACK_PUBLIC_KEY = config('PAYSTACK_PUBLIC_KEY')
+PAYSTACK_WEBHOOK_SECRET = config('PAYSTACK_WEBHOOK_SECRET')
 PAYSTACK_BASE_URL = 'https://api.paystack.co'
-PAYSTACK_WEBHOOK_SECRET = 'your_webhook_secret_here'
 
 # Payment settings
 PAYMENT_CURRENCY = 'GHS'
