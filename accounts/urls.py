@@ -1,43 +1,34 @@
+# accounts/urls.py
 from django.urls import path
-from django.views.generic import TemplateView
-from django.http import JsonResponse
-
-# Temporary views (replace with actual views when you create them)
-def auth_list_view(request):
-    return JsonResponse({
-        'endpoints': {
-            'register': '/api/v1/auth/register/',
-            'login': '/api/v1/auth/login/',
-            'profile': '/api/v1/auth/profile/',
-            'token': '/api/v1/auth/token/',
-            'token_refresh': '/api/v1/auth/token/refresh/',
-        }
-    })
-
-def register_view(request):
-    return JsonResponse({'message': 'Register endpoint - Coming soon'})
-
-def login_view(request):
-    return JsonResponse({'message': 'Login endpoint - Coming soon'})
-
-def profile_view(request):
-    return JsonResponse({'message': 'Profile endpoint - Coming soon'})
-
-def token_view(request):
-    return JsonResponse({'message': 'Token endpoint - Coming soon'})
-
-def token_refresh_view(request):
-    return JsonResponse({'message': 'Token refresh endpoint - Coming soon'})
+from rest_framework_simplejwt.views import (
+    TokenObtainPairView,
+    TokenRefreshView,
+    TokenVerifyView,
+)
+from . import views
 
 app_name = 'accounts'
 
 urlpatterns = [
-    path('', auth_list_view, name='auth-list'),
-    path('register/', register_view, name='register'),
-    path('login/', login_view, name='login'),
-    path('profile/', profile_view, name='profile'),
+    # Authentication endpoints
+    path('register/', views.RegisterView.as_view(), name='register'),
+    path('login/', views.LoginView.as_view(), name='login'),
+    path('profile/', views.ProfileView.as_view(), name='profile'),
+    path('change-password/', views.ChangePasswordView.as_view(), name='change-password'),
     
-    # JWT Token endpoints (for future use)
-    path('token/', token_view, name='token_obtain_pair'),
-    path('token/refresh/', token_refresh_view, name='token_refresh'),
+    # JWT Token endpoints
+    path('token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
+    path('token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
+    path('token/verify/', TokenVerifyView.as_view(), name='token_verify'),
+    
+    # Additional user endpoints
+    path('me/', views.CurrentUserView.as_view(), name='current-user'),
+    path('users/', views.UserListView.as_view(), name='user-list'),
+    
+    # Account management
+    path('deactivate/', views.DeactivateAccountView.as_view(), name='deactivate-account'),
+    path('verify-email/', views.VerifyEmailView.as_view(), name='verify-email'),
+    
+    # API overview
+    path('', views.auth_overview, name='auth-overview'),
 ]

@@ -1,43 +1,47 @@
+# products/urls.py
 from django.urls import path
-from django.views.generic import TemplateView
-from django.http import JsonResponse
+from . import views
 
-# Temporary views (replace with actual views when you create them)
-def auth_list_view(request):
-    return JsonResponse({
-        'endpoints': {
-            'register': '/api/v1/auth/register/',
-            'login': '/api/v1/auth/login/',
-            'profile': '/api/v1/auth/profile/',
-            'token': '/api/v1/auth/token/',
-            'token_refresh': '/api/v1/auth/token/refresh/',
-        }
-    })
-
-def register_view(request):
-    return JsonResponse({'message': 'Register endpoint - Coming soon'})
-
-def login_view(request):
-    return JsonResponse({'message': 'Login endpoint - Coming soon'})
-
-def profile_view(request):
-    return JsonResponse({'message': 'Profile endpoint - Coming soon'})
-
-def token_view(request):
-    return JsonResponse({'message': 'Token endpoint - Coming soon'})
-
-def token_refresh_view(request):
-    return JsonResponse({'message': 'Token refresh endpoint - Coming soon'})
-
-app_name = 'accounts'
+app_name = 'products'
 
 urlpatterns = [
-    path('', auth_list_view, name='auth-list'),
-    path('register/', register_view, name='register'),
-    path('login/', login_view, name='login'),
-    path('profile/', profile_view, name='profile'),
+    # Categories
+    path('categories/', views.CategoryListView.as_view(), name='category-list'),
+    path('categories/<int:pk>/', views.CategoryDetailView.as_view(), name='category-detail'),
+    path('categories/<int:category_id>/products/', views.CategoryProductsView.as_view(), name='category-products'),
     
-    # JWT Token endpoints (for future use)
-    path('token/', token_view, name='token_obtain_pair'),
-    path('token/refresh/', token_refresh_view, name='token_refresh'),
+    # Products
+    path('', views.ProductListView.as_view(), name='product-list'),
+    path('<int:pk>/', views.ProductDetailView.as_view(), name='product-detail'),
+    path('featured/', views.FeaturedProductsView.as_view(), name='featured-products'),
+    path('search/', views.ProductSearchView.as_view(), name='product-search'),
+    path('sku/<str:sku>/', views.ProductBySkuView.as_view(), name='product-by-sku'),
+    
+    # Cart Management
+    path('cart/', views.CartView.as_view(), name='cart-detail'),
+    path('cart/add/', views.AddToCartView.as_view(), name='add-to-cart'),
+    path('cart/items/', views.CartItemListView.as_view(), name='cart-items'),
+    path('cart/items/<int:item_id>/', views.CartItemDetailView.as_view(), name='cart-item-detail'),
+    path('cart/items/<int:item_id>/update/', views.UpdateCartItemView.as_view(), name='update-cart-item'),
+    path('cart/items/<int:item_id>/remove/', views.RemoveCartItemView.as_view(), name='remove-cart-item'),
+    path('cart/clear/', views.ClearCartView.as_view(), name='clear-cart'),
+    
+    # Product Management (Admin)
+    path('admin/products/', views.ProductCreateView.as_view(), name='product-create'),
+    path('admin/products/<int:pk>/update/', views.ProductUpdateView.as_view(), name='product-update'),
+    path('admin/categories/', views.CategoryCreateView.as_view(), name='category-create'),
+    
+    # Statistics and Analytics
+    path('stats/', views.ProductStatsView.as_view(), name='product-stats'),
+    path('categories/<int:category_id>/stats/', views.CategoryStatsView.as_view(), name='category-stats'),
+    
+    # Wishlist (Future feature)
+    path('wishlist/', views.WishlistView.as_view(), name='wishlist'),
+    path('wishlist/add/', views.AddToWishlistView.as_view(), name='add-to-wishlist'),
+    
+    # Product Comparison (Future feature)
+    path('compare/', views.CompareProductsView.as_view(), name='compare-products'),
+    
+    # API Overview
+    path('overview/', views.products_overview, name='products-overview'),
 ]
