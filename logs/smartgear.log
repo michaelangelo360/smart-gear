@@ -7,3 +7,35 @@ Not Found: /swagger
 Watching for file changes with StatReloader
 Watching for file changes with StatReloader
 Watching for file changes with StatReloader
+Watching for file changes with StatReloader
+"GET / HTTP/1.1" 200 266
+Not Found: /swagger
+"GET /swagger HTTP/1.1" 404 3332
+Watching for file changes with StatReloader
+Not Found: /swagger
+"GET /swagger HTTP/1.1" 404 3332
+"GET / HTTP/1.1" 200 266
+C:\smart_gear\smart_gear\settings.py changed, reloading.
+Watching for file changes with StatReloader
+C:\smart_gear\smart_gear\urls.py changed, reloading.
+Watching for file changes with StatReloader
+C:\smart_gear\smart_gear\urls.py changed, reloading.
+Watching for file changes with StatReloader
+C:\smart_gear\smart_gear\urls.py changed, reloading.
+Watching for file changes with StatReloader
+C:\smart_gear\smart_gear\urls.py changed, reloading.
+Watching for file changes with StatReloader
+C:\smart_gear\smart_gear\urls.py changed, reloading.
+Watching for file changes with StatReloader
+"GET / HTTP/1.1" 200 266
+"GET /swagger HTTP/1.1" 301 0
+"GET /swagger/ HTTP/1.1" 200 1604
+"GET /static/drf-yasg/style.css HTTP/1.1" 200 1047
+"GET /static/drf-yasg/swagger-ui-dist/swagger-ui.css HTTP/1.1" 200 145206
+"GET /static/drf-yasg/swagger-ui-dist/swagger-ui-bundle.js HTTP/1.1" 200 1046583
+"GET /static/drf-yasg/insQ.min.js HTTP/1.1" 200 2093
+"GET /static/drf-yasg/swagger-ui-init.js HTTP/1.1" 200 14964
+"GET /static/drf-yasg/immutable.min.js HTTP/1.1" 200 56904
+"GET /static/drf-yasg/swagger-ui-dist/swagger-ui-standalone-preset.js HTTP/1.1" 200 322863
+"GET /swagger/?format=openapi HTTP/1.1" 200 6906
+"GET /static/drf-yasg/swagger-ui-dist/favicon-32x32.png HTTP/1.1" 200 628

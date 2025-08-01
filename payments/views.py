@@ -6,6 +6,7 @@ from django.views.decorators.csrf import csrf_exempt
 from django.utils.decorators import method_decorator
 from django.http import HttpResponse
 from django.conf import settings
+from django.utils import timezone
 import json
 import logging
 from .models import Order, Transaction, WebhookEvent
@@ -132,6 +133,44 @@ class PaymentInitializeView(generics.GenericAPIView):
             return Response({
                 'error': 'Payment initialization failed'
             }, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+
+
+
+def payments_overview(request):
+    """API overview for payments endpoints"""
+    return Response({
+        'message': 'SmartGear Payments API',
+        'version': '1.0',
+        'currency': 'GHS (Ghana Cedis)',
+        'country': 'Ghana',
+        'endpoints': {
+            'orders': {
+                'list': '/api/v1/payments/orders/',
+                'create': '/api/v1/payments/orders/create/',
+                'detail': '/api/v1/payments/orders/{id}/',
+            },
+            'payments': {
+                'initialize': '/api/v1/payments/initialize/',
+                'verify': '/api/v1/payments/verify/{reference}/',
+            },
+            'transactions': {
+                'list': '/api/v1/payments/transactions/',
+                'detail': '/api/v1/payments/transactions/{id}/',
+            },
+            'webhooks': {
+                'paystack': '/api/v1/payments/webhook/paystack/',
+            },
+        },
+        'features': [
+            'Paystack Ghana Integration',
+            'Mobile Money Support', 
+            'Card Payments',
+            'Bank Transfer',
+            'Real-time Webhooks'
+        ],
+        'status': 'active'
+    })
 
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
